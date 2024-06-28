@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    margin: 0;
+    margin: 10px;
     min-height: 100vh;
     background: lightsteelblue;
 }
@@ -11,6 +11,7 @@ body {
 .topnav {
     overflow: hidden;
     background-color: #333;
+    border-radius: 10px;
 }
 
 .topnav a {

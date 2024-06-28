@@ -82,6 +82,30 @@ button:active {
     font-size: 1.5rem;
 }
 
+#loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #333;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 1s linear infinite;
+}
+
+.center-loader {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* Meda Query: tablet or smaller */
 @media screen and (max-width: 1000px) {
     .quote-container {
