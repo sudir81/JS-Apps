@@ -1,14 +1,20 @@
-let imgsCount = 5;
-const api_key = "aswqfoAtp1azNnpaPzaKYXyRjj4iyIAlZjQX7EHBfpI"
-const apiURL = `https://api.unsplash.com/photos/random/?client_id=${api_key}&count=${imgsCount}`;
-
 const loader = document.getElementById('loader');
 const imageContainer = document.getElementById('image-container');
+let mybutton = document.getElementById("scroll-to-top");
 
 let photos = [];
 let ready = false;
 let imagesLoaded = 0;
 let totalImages = 0;
+let isInitialLoad = true;
+
+let initialImgsCount = 5;
+const api_key = "aswqfoAtp1azNnpaPzaKYXyRjj4iyIAlZjQX7EHBfpI"
+let apiURL = `https://api.unsplash.com/photos/random/?client_id=${api_key}&count=${initialImgsCount}`;
+
+function updateAPIURLWithCount(imgsCount) {
+    apiURL = `https://api.unsplash.com/photos/random/?client_id=${api_key}&count=${imgsCount}`
+}
 
 // show loader
 function showLoader() {
@@ -63,13 +69,35 @@ function displayPhotos() {
 
 // get photos
 async function getPhotos() {
-    try {
-        const response = await fetch(apiURL);
-        photos = await response.json();
-        displayPhotos();
-    } catch (error) {
-        console.log(error);
+  try {
+    const response = await fetch(apiURL);
+    photos = await response.json();
+    displayPhotos();
+
+    if (isInitialLoad) {
+      updateAPIURLWithCount(30);
+      isInitialLoad = false;
     }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function scrollToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
 }
 
 // event listeners
@@ -80,6 +108,7 @@ window.addEventListener('scroll', (e) => {
         showLoader();
     }
 })
+
 
 // on load
 getPhotos();
